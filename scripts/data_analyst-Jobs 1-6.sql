@@ -81,11 +81,11 @@ ORDER BY avg_rating DESC;
 
 --Q10. Kaiser Permanente 4.20
 
-SELECT count(title) AS title_count
+SELECT count(DISTINCT title) AS title_count
 FROM data_analyst_jobs 
 WHERE title LIKE '%Analyst%';
 
---Q11. 1636
+--Q11. 754
 
 SELECT (title) AS title_count
 FROM data_analyst_jobs
@@ -96,10 +96,9 @@ AND title NOT LIKE '%Analytics%';
 
 --Q12. 39
 
-SELECT title, days_since_posting,skill, domain
+SELECT title, days_since_posting,skill, domain AS industry
 FROM data_analyst_jobs
-WHERE days_since_posting> 21 AND skill='SQL' AND domain IS NOT NULL
-ORDER BY days_since_posting DESC; 
+WHERE days_since_posting> 21 AND skill LIKE '%SQL%' AND domain IS NOT NULL
+ORDER BY days_since_posting DESC
 
-
---Qbonus COnsulting and Buisness Services, computers and Electronics Real Estate. ALL 3 have been listed for more than two weeks.
+--Qbonus COnsulting and Buisness Services, Resturants, Travel and Leisure. ALL 3 have been listed for more than two weeks.
