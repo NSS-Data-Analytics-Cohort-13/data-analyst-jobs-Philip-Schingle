@@ -24,18 +24,18 @@ WHERE location= 'TN'
 
 SELECT *
 FROM data_analyst_jobs
-WHERE location= 'KY'
+WHERE location= 'KY' OR location = 'TN'
 
 
---3b. 6
+--3b. 27
 
-SELECT *
+SELECT COUNT (title) AS star_rating_above4
 FROM data_analyst_jobs
 WHERE location= 'TN'
-AND star_rating BETWEEN 4 AND 5
+AND star_rating >4;
 
 
---Q4. 4
+--Q4. 3
 
 SELECT *
 FROM data_analyst_jobs
@@ -44,11 +44,13 @@ BETWEEN 500 AND 1000
 
 --Q5. 151
 
-SELECT AVG(star_rating) AS avg_rating, location AS state
+SELECT  location AS state, ROUND(AVG(star_rating),1) AS avg_rating, location AS state
 FROM data_analyst_jobs
-GROUP BY location 
+WHERE star_rating IS NOT NULL
+GROUP BY location
+ORDER BY avg_rating DESC;
 
---Q6. RI
+--Q6. NEBRASKA
 
 Select COUNT(DISTINCT data_analyst_jobs.title)
 FROM data_analyst_jobs
@@ -62,38 +64,35 @@ WHERE location= 'CA'
 
 --Q8. 230
 
+SELECT company, AVG(star_rating) AS avg_star_rating
+FROM data_analyst_jobs
+WHERE company IS NOT NULL
+GROUP BY company
+HAVING MIN (review_count) > 5000;
+
+--Q9. 40
 SELECT ROUND(AVG(star_rating), 2) AS avg_rating, company
 FROM data_analyst_jobs
 WHERE (review_count> '5000')
 AND company IS not NULL
 Group BY company 
-ORDER BY avg_rating ASC;
-
---Q9. 40
-
-
-SELECT ROUND(AVG(star_rating), 2) AS avg_rating, company, location
-FROM data_analyst_jobs
-WHERE (review_count> '5000')
-AND company IS not NULL
-Group BY company, location
 ORDER BY avg_rating DESC;
+
 
 --Q10. Kaiser Permanente 4.20
 
-SELECT count(DISTINCT title) AS title_count
+SELECT DISTINCT title AS job_title
 FROM data_analyst_jobs 
-WHERE title LIKE '%Analyst%';
+WHERE title ILIKE '%ANALYST%';
 
---Q11. 754
+--Q11. 774
 
 SELECT (title) AS title_count
 FROM data_analyst_jobs
-WHERE title NOT LIKE '%Analyst%'
-AND title NOT LIKE '%Analytics%';
+WHERE title NOT ILIKE '%Analyst%'
+AND title NOT ILIKE '%Analytics%';
 
---Q12. it is not case sensitive
-
+--Q12. Tableau
 --Q12. 39
 
 SELECT title, days_since_posting,skill, domain AS industry
